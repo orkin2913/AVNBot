@@ -7,7 +7,7 @@
 #######
 
 $config['query']['login'] = 'serveradmin';
-$config['query']['password'] = ''; #ServerQuery password
+$config['query']['password'] = '2m4U4ptu'; #ServerQuery password
 
 $config['server']['ip'] = '127.0.0.1';
 $config['server']['port'] = 9987; #Server port
@@ -21,8 +21,8 @@ $config['server']['queryport'] = 10011; #Server query port
 
 $config['bot']['path'] = '/root/bot0new/'; #Absolute path to bot directory
 $config['bot']['nickname'] = 'AVNBot'; #Bots name
-$config['bot']['channel'] = 2; #Bots channel
-$config['bot']['admingroups'] = '2,6'; #Bots channel
+$config['bot']['channel'] = 293; #Bots channel
+$config['bot']['admingroups'] = '2,6'; #Grupy administracyjne
 
 #######
 # 
@@ -31,18 +31,13 @@ $config['bot']['admingroups'] = '2,6'; #Bots channel
 #######
 
 $config['module']['pokebot']['enable'] = true; #Pokebot
-$config['module']['userecord']['enable'] = true; #Rekord użytkowników
-$config['module']['welcomemsg']['enable'] = true; #Wiadomość powitalna
-$config['module']['movetoafk']['enable'] = true; #Przenoszenie na kanał AFK
 $config['module']['nickprotect']['enable'] = true; #Ochrona nicków
 $config['module']['nickabuse']['enable'] = true; #Wyszukiwanie nadużyć w nickach
 $config['module']['channelcheck']['enable'] = true; #Sprawdzanie kanałów
 $config['module']['autoregister']['enable'] = true; #Automatyczna rejestracja
-$config['module']['adminsonline']['enable'] = true; #Administratorzy online
-$config['module']['automsg']['enable'] = true; #Automatyczna wiadomość na czacie głównym
 $config['module']['channelgroups']['enable'] = true; #Ranga po wejściu na dany kanał
 $config['module']['commands']['enable'] = true; #Komendy bota
-$config['module']['controlbot']['enable'] = true; #Bot kontrolny
+
 
 #######
 # 
@@ -50,8 +45,12 @@ $config['module']['controlbot']['enable'] = true; #Bot kontrolny
 #
 #######
 
-$config['module']['welcomemsg']['mode'] = 0; #0 - do wszystkich // 1 - pomiń adminów // 2 - tylko nowi użytkownicy
-$config['module']['welcomemsg']['message'] = 'Witaj %nick%! Ostatni raz byłeś u nas %lastconnected%. Połączyłeś się z serwerem %totalconnections% razy. Twoje IP: %ip%, Twoje unikalne ID: %uid%'; #Treść wiadomości powitalnej
+$config['module']['welcomemsg'] = array(
+											'enable' => true, #Włączyć? true / false
+											'mode' => 0, #0 - do wszystkich // 1 - pomiń adminów // 2 - tylko nowi użytkownicy
+											'message' => 'Witaj %CLIENT_NICKNAME%! Ostatni raz byłeś u nas %CLIENT_LASTCONNECTED%. Połączyłeś się z serwerem %CLIENT_TOTALCONNECTIONS% razy. Twoje IP: %CLIENT_IP%, Twoje unikalne ID: %CLIENT_UNIQUE_ID%' #Treść wiadomości powitalnej
+);
+
 
 #######
 # 
@@ -59,8 +58,98 @@ $config['module']['welcomemsg']['message'] = 'Witaj %nick%! Ostatni raz byłeś 
 #
 #######
 
-$config['module']['userecord']['channel'] = 3; #ID kanału na którym będzie aktualny rekord użytkowników
-$config['module']['userecord']['spacer'] = '[cspacer69]'; #Spacer jakiego bot ma użyć w nazwie kanału
+$config['module']['userecord'] = array(
+											'enable' => true, #Włączyć? true / false
+											'channel' => 355, #ID kanału na którym będzie aktualny rekord użytkowników
+											'spacer' => '[cspacer69]', #Spacer jakiego bot ma użyć w nazwie kanału
+											'datazero' => '1970-01-01 00:00:00', #Data zerowa. Przy uruchomieniu bota akcja wykona się raz bez czekania
+											'interval' => array( #Interwał sprawdzania rekordu. Co ile ma wykonywać akcję
+															'days' => 0,
+															'hours' => 0,
+															'minutes' => 0,
+															'seconds' => 1
+											)
+);
 
+
+
+#######
+# 
+# Konfiguracja sprawdzania adminów online
+#
+#######
+
+$config['module']['adminsonline'] = array( #Admini online
+											'enable' => true, #Włączyć? true / false
+											'channel' => 357, #ID kanału na którym będzie status adminów online
+											'groupsize' => 16, #Wielkość nazw grup
+											'nicksize' => 12, #Wielkość nicków
+											'statusize' => 8, #Wielkość statusu online/offline
+											'groupcolor' => '#aa0000', #Kolor nazw grup w RGB
+											'datazero' => '1970-01-01 00:00:00', #Data zerowa. Przy uruchomieniu bota akcja wykona się raz bez czekania
+											'interval' => array( #Interwał sprawdzania adminów online. Co ile ma wykonywać akcję
+															'days' => 0,
+															'hours' => 0,
+															'minutes' => 0,
+															'seconds' => 5
+											)	
+);
+
+
+
+#######
+# 
+# Konfiguracja auto wiadomości
+#
+#######
+
+$config['module']['automsg'] = array( #Automatyczna wiadomość na czacie głównym
+											'enable' => true, #Włączyć? true / false
+											'datazero' => '1970-01-01 00:00:00', #Data zerowa. Przy uruchomieniu bota akcja wykona się raz bez czekania
+											'interval' => array( #Interwał wysyłania waidomości na czacie głównym. Co ile ma wykonywać akcję
+															'days' => 0,
+															'hours' => 0,
+															'minutes' => 0,
+															'seconds' => 1
+											)	
+);
+
+
+
+#######
+# 
+# Konfiguracja AFK Bota
+#
+#######
+
+$config['module']['movetoafk'] = array( #Przenoszenie na kanał AFK
+											'enable' => true, #Włączyć? true / false
+											'datazero' => '1970-01-01 00:00:00', #Data zerowa. Przy uruchomieniu bota akcja wykona się raz bez czekania
+											'interval' => array( #Interwał przenoszenia z i do kanału AFK. Co ile ma wykonywać akcję
+															'days' => 0,
+															'hours' => 0,
+															'minutes' => 0,
+															'seconds' => 1
+											)
+);
+
+
+
+#######
+# 
+# Konfiguracja controlbota
+#
+#######
+
+$config['module']['controlbot'] = array( #Sprawdzanie stanu bota
+											'enable' => true, #Włączyć? true / false
+											'datazero' => '1970-01-01 00:00:00', #Data zerowa. Przy uruchomieniu bota akcja wykona się raz bez czekania
+											'interval' => array( #Interwał sprawdzania działania bota. Co ile ma wykonywać akcję
+															'days' => 0,
+															'hours' => 0,
+															'minutes' => 0,
+															'seconds' => 1
+											)		
+);
 
 ?>
