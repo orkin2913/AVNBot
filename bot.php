@@ -12,8 +12,6 @@ require('config.php');
 #Podłączanie functions.php
 require('functions.php');
 
-#Nazwa modułu bota
-$module = 'TestBot';
 
 #Budowanie nowego obiektu
 $tsAdmin = new ts3admin($config['server']['ip'], $config['server']['queryport']);
@@ -28,7 +26,7 @@ if($tsAdmin->getElement('success', $tsAdmin->connect())) {
 		$tsAdmin->selectServer($config['server']['port']);
 		
 		#Ustawianie nazwy bota
-		$tsAdmin->setName('['.$config['bot']['nickname'].']'.$module);
+		$tsAdmin->setName($config['bot']['nickname']);
 		
 		#Przenoszenie bota do wybranego kanału
 		$whoami = $tsAdmin->getElement('data', $tsAdmin->whoAmI());
@@ -36,12 +34,18 @@ if($tsAdmin->getElement('success', $tsAdmin->connect())) {
 		
 		echo "Connection established!\n";
 		
+		$clients['aktualnie'] = listaclientow();
+		$clients['record'] = file_get_contents('tmp/userecord.txt');
+		
 		#Pętla z funkcjami bota
 		$i['petla'] = 0; $i['animacja'] = 0; $i['pingpong'] = 0;
 		while($i['petla'] != 1)
 		{
 				#Pętla wykonuje się co sekundę
 				sleep(1);
+				
+				#Data wykonania pętli
+				$datapetli = date('Y-m-d G:i:s');
 				
 				#Co 5 min bot wykonuje prostą operację
 				#aby nie wyrzucało go z serwera za bezczynność
@@ -51,10 +55,29 @@ if($tsAdmin->getElement('success', $tsAdmin->connect())) {
 				}
 				
 				
-				######
-				#Skrypt#
-				######
+				#Wiadomość powitalna
+				if($config['module']['welcomemsg']['enable'] == true) {
+							welcomemsg();
+				}
+
+				#Rekord userów
+				if($config['module']['userecord']['enable'] == true) {
+						if(juzmozna($datapetli, $config['module']['userecord']['datazero'], intervaltosec($config['module']['userecord']['interval'])) == true) {
+								userecord();
+								$config['module']['userecord']['datazero'] = $datapetli;
+						}
+				}
 				
+				
+				#Admini online
+				if($config['module']['adminsonline']['enable'] == true) {
+						if(juzmozna($datapetli, $config['module']['adminsonline']['datazero'], intervaltosec($config['module']['adminsonline']['interval'])) == true) {
+							adminsonline();
+							$config['module']['adminsonline']['datazero'] = $datapetli;
+						}
+				}
+				
+
 				
 				#Sprawdzanie czy wystąpiły błędy
 				if(count($tsAdmin->getDebugLog()) > 0) {
@@ -68,7 +91,7 @@ if($tsAdmin->getElement('success', $tsAdmin->connect())) {
 						}
 						
 						#Tworzenie i zapisywanie do pliku logów z bota
-						$logfile = $config['bot']['path'].'log/avnbot_'.$module.'_'.date('Y-m-d_H_i_s').'.'.rand(2048, 65535).'.log';
+						$logfile = $config['bot']['path'].'log/avnbot_'.date('Y-m-d_H_i_s').'.'.rand(2048, 65535).'.log';
 						file_put_contents($logfile, $logContent);
 						
 						#Zatrzymywanie pracy bota
