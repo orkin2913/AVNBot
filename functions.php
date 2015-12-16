@@ -68,7 +68,39 @@ function listaclientow() {
 		return $clients['recent'];
 }
 
+function logo() {
+		
+echo " 
+       ;;;;;;;   .;;;      ,;;;  ;;;;;;    ;;;     
+       ;;;;;;;    ;;;      ;;;;  ;;;;;;    ;;;      
+       ;;;;;;;    ;;;`     ;;;   ;;;;;;`   ;;;      
+      `;;; ;;;`   ;;;:     ;;;   ;;; ;;;   ;;;       
+      :;;: ,;;;   :;;;    `;;;   ;;; ;;;   ;;;   \e[0;36m:\e[0m
+      ;;;   ;;;    ;;;    :;;;   ;;; ,;;   ;;;   \e[0;36m:                 `   \e[0m
+      ;;;   ;;;    ;;;    ;;;.   ;;;  ;;:  ;;;   \e[0;36m:                 `     \e[0m
+      ;;;   ;;;    ;;;`   ;;;    ;;;  ;;;  ;;;   \e[0;36m:                 `   \e[0m
+     ,;;;   :;;:   :;;;   ;;;    ;;;  ;;;  ;;;   \e[0;36m::::::   ......  ````` \e[0m
+     ;;;.   .;;;   `;;;  .;;;    ;;;   ;;. ;;;   \e[0;36m:    :,  .    .   `   \e[0m
+     ;;;:::::;;;    ;;;  ;;;,    ;;;   ;;; ;;;  \e[0;36m :    ,: `.    ..  `   \e[0m
+     ;;;;;;;;;;;    ;;;  ;;;     ;;;   ;;; ;;;  \e[0;36m :    `: `.    `.  `  \e[0m
+    .;;;;;;;;;;;`   :;;, ;;;     ;;;   `;; ;;; \e[0;36m  :    .: `.    ..  `   \e[0m
+    :;;:     :;;;   `;;;;;;;     ;;;    ;;;;;;  \e[0;36m :    ::  .    ..  `    \e[0m
+    ;;;`     `;;;    ;;;;;;:     ;;;    ;;;;;;  \e[0;36m :    :.  .    .   ``   ``\e[0m
+    ;;;       ;;;    ;;;;;;      ;;;    ,;;;;;  \e[0;36m ::::::   `.....    ``` ``\e[0m
 
+";
+}
+
+#Funkcja sprawdzająca wersję bota
+
+function checkversion() {
+		
+		global $config;
+		
+		$version = file_get_contents('https://raw.githubusercontent.com/orkin2913/AVNBot/master/version');
+		
+		return $version;
+}
 
 #clid - id clienta na serwerze
 #Zwraca true albo false w zależności czy client połączył się po raz pierwszy
@@ -86,8 +118,6 @@ function clientisnew($clid) {
 		
 		return $isnew;
 }
-
-
 
 #msg - wiadomość do przerobienia // clid - id clienta do którego będzie wysłana wiadomość
 #Zwraca wiadomość z zamienionymi znacznikami %foobar% na dane z funkcji
