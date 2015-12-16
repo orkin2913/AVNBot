@@ -18,7 +18,6 @@
 	
 */
 
-
 #Brak limitów czasu wykonania kodu
 set_time_limit(0);
 
@@ -30,6 +29,23 @@ require('config.php');
 
 #Podłączanie functions.php
 require('functions.php');
+
+echo "\n";
+
+logo();
+
+echo "Checking version...\n";
+$version = str_replace(array("\t", "\n"), "", checkversion());
+
+if($version != $config['bot']['version']) {
+	echo "\e[0;33mWarning!\e[0m\nLatest version: \e[0;32m".$version."\e[0m\nYour version: \e[0;31m".$config['bot']['version']."\e[0m\nWe recommend update\n\n";
+	
+} else {
+	echo "\e[0;32mOK!\e[0m - Version up to date\n\n";
+}
+
+
+
 
 
 #Budowanie nowego obiektu
@@ -54,7 +70,7 @@ if($tsAdmin->getElement('success', $tsAdmin->connect())) {
 		echo "Connection established!\n";
 		
 		$clients['aktualnie'] = listaclientow();
-		$clients['record'] = file_get_contents('tmp/userecord.txt');
+		$clients['record'] = str_replace(array("\t", "\n"), "", file_get_contents('tmp/userecord.txt'));
 		
 		#Pętla z funkcjami bota
 		$i['petla'] = 0; $i['animacja'] = 0; $i['pingpong'] = 0;
