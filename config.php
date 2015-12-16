@@ -18,7 +18,6 @@
 	
 */
 
-
 #######
 # 
 # Konfiguracja logowania
@@ -38,10 +37,11 @@ $config['server']['queryport'] = 10011; #Server query port
 #
 #######
 
-$config['bot']['path'] = '/root/bot0new/'; #Absolute path to bot directory
+$config['bot']['path'] = '/home/bottest/avnbot/'; #Absolute path to bot directory
 $config['bot']['nickname'] = 'AVNBot'; #Bots name
-$config['bot']['channel'] = 293; #Bots channel
-$config['bot']['admingroups'] = '2,6'; #Grupy administracyjne
+$config['bot']['channel'] = 2; #Bots channel
+$config['bot']['admingroups'] = '2,6'; #ID grup administracyjnych
+$config['bot']['version'] = '1.0.0'; #Wersja bota
 
 #######
 # 
@@ -79,7 +79,7 @@ $config['module']['welcomemsg'] = array(
 
 $config['module']['userecord'] = array(
 											'enable' => true, #Włączyć? true / false
-											'channel' => 355, #ID kanału na którym będzie aktualny rekord użytkowników
+											'channel' => 5, #ID kanału na którym będzie aktualny rekord użytkowników
 											'spacer' => '[cspacer69]', #Spacer jakiego bot ma użyć w nazwie kanału
 											'datazero' => '1970-01-01 00:00:00', #Data zerowa. Przy uruchomieniu bota akcja wykona się raz bez czekania
 											'interval' => array( #Interwał sprawdzania rekordu. Co ile ma wykonywać akcję
@@ -100,7 +100,7 @@ $config['module']['userecord'] = array(
 
 $config['module']['adminsonline'] = array( #Admini online
 											'enable' => true, #Włączyć? true / false
-											'channel' => 357, #ID kanału na którym będzie status adminów online
+											'channel' => 6, #ID kanału na którym będzie status adminów online
 											'groupsize' => 16, #Wielkość nazw grup
 											'nicksize' => 12, #Wielkość nicków
 											'statusize' => 8, #Wielkość statusu online/offline
