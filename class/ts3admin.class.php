@@ -4043,7 +4043,7 @@ class ts3admin {
  	public function getDebugLog() {
 		return $this->runtime['debug'];
 	}
-
+	
 /**
   * addDebugLog
   * 
@@ -4063,5 +4063,31 @@ class ts3admin {
 		}
 		$this->runtime['debug'][] = 'Error in '.$methodName.'() on line '.$line.': '.$text;	
 	}
+	
+	
+	
+	
+	
+	
+	public function clearDebugLog() {
+		$this->runtime['debug'] = array();	
+	}
+
+	
+	public function checkCommands() {
+		
+		$data = '';
+		
+		do {
+			$data .= fread($this->runtime['socket'], 4096);
+			
+		} while(strpos($data, 'notifytextmessage targetmode=1 msg=') === false);
+
+		return $data;
+	}
+	
+	
+	
+	
 }
 ?>
