@@ -68,31 +68,61 @@ if($tsAdmin->getElement('success', $tsAdmin->connect())) {
 		$tsAdmin->clientMove($whoami['client_id'] , $config['bot']['channel']);
 		
 		echo "Connection established!\n";
-		
+
 		$clients['aktualnie'] = listaclientow();
-		$clients['record'] = str_replace(array("\t", "\n"), "", file_get_contents('tmp/userecord.txt'));
+		if($config['module']['accessgroup']['enable'] == true) {
+				$clients['aktualnie2'] = listaclientow();
+		}
+		#$commandsrecived = $tsAdmin->getElement('data', $tsAdmin->execOwnCommand(3, 'servernotifyregister event=textprivate'));
 		
+
 		#Pętla z funkcjami bota
-		$i['petla'] = 0; $i['animacja'] = 0; $i['pingpong'] = 0;
-		while($i['petla'] != 1)
+		$i['pingpong'] = 0; $i['animacja'] = 0;
+		while(true)
 		{
-				#Pętla wykonuje się co sekundę
-				sleep(1);
+
+				#Pętla wykonuje się co czas ustawiony w configu
+				time_nanosleep(floor($config['bot']['speed']/10), $config['bot']['speed']%10*100000000);
 				
 				#Data wykonania pętli
 				$datapetli = date('Y-m-d G:i:s');
 				
 				#Co 5 min bot wykonuje prostą operację
 				#aby nie wyrzucało go z serwera za bezczynność
-				if($i['pingpong'] == 300) {
-						$tsAdmin->bindingList();
+				if($i['pingpong'] == 600) {
+						#$tsAdmin->bindingList();
+						$tsAdmin->whoAmI();
 						$i['pingpong'] = 0;
 				}
 				
+
+				#Komendy // nie działa
+				/*
+				if($config['module']['commands']['enable'] == true) {
+						if(juzmozna($datapetli, $config['module']['commands']['datazero'], intervaltosec($config['module']['commands']['interval'])) == true) {
+								commands();
+								$config['module']['commands']['datazero'] = $datapetli;
+						}
+				}
+				*/
+				
+				#Kanałowe rangi dostępu
+				if($config['module']['accessgroup']['enable'] == true) {
+						accessgroupisnew();
+						if(juzmozna($datapetli, $config['module']['accessgroup']['datazero'], intervaltosec($config['module']['accessgroup']['interval'])) == true) {
+								accessgroup();
+								$config['module']['accessgroup']['datazero'] = $datapetli;
+						}
+				}
 				
 				#Wiadomość powitalna
 				if($config['module']['welcomemsg']['enable'] == true) {
 							welcomemsg();
+				}
+				
+				#Autorejestracja
+				if($config['module']['autogroups']['enable'] == true) {
+							autogroups();
 				}
 
 				#Rekord userów
@@ -100,6 +130,14 @@ if($tsAdmin->getElement('success', $tsAdmin->connect())) {
 						if(juzmozna($datapetli, $config['module']['userecord']['datazero'], intervaltosec($config['module']['userecord']['interval'])) == true) {
 								userecord();
 								$config['module']['userecord']['datazero'] = $datapetli;
+						}
+				}
+				
+				#Rekord userów
+				if($config['module']['useronline']['enable'] == true) {
+						if(juzmozna($datapetli, $config['module']['useronline']['datazero'], intervaltosec($config['module']['useronline']['interval'])) == true) {
+								useronline();
+								$config['module']['useronline']['datazero'] = $datapetli;
 						}
 				}
 				
@@ -112,26 +150,26 @@ if($tsAdmin->getElement('success', $tsAdmin->connect())) {
 						}
 				}
 				
-
 				
-				#Sprawdzanie czy wystąpiły błędy
-				if(count($tsAdmin->getDebugLog()) > 0) {
-					
-						$logContent = '';
-						
-						#Zapisywanie błędów do łańcucha
-						foreach($tsAdmin->getDebugLog() as $logEntry) {
-								echo $logEntry."\n";
-								$logContent .= $logEntry;
+				#Wiadomość na czacie głównym
+				if($config['module']['automsg']['enable'] == true) {
+						if(juzmozna($datapetli, $config['module']['automsg']['datazero'], intervaltosec($config['module']['automsg']['interval'])) == true) {
+							automsg();
+							$config['module']['automsg']['datazero'] = $datapetli;
 						}
-						
-						#Tworzenie i zapisywanie do pliku logów z bota
-						$logfile = $config['bot']['path'].'log/avnbot_'.date('Y-m-d_H_i_s').'.'.rand(2048, 65535).'.log';
-						file_put_contents($logfile, $logContent);
-						
-						#Zatrzymywanie pracy bota
-						die("Error ^^\nLogfile $logfile\n");
 				}
+				
+				
+				#AFKBot
+				if($config['module']['movetoafk']['enable'] == true) {
+						if(juzmozna($datapetli, $config['module']['movetoafk']['datazero'], intervaltosec($config['module']['movetoafk']['interval'])) == true) {
+							movetoafk();
+							$config['module']['movetoafk']['datazero'] = $datapetli;
+						}
+				}
+				
+				logi();
+
 				
 				#Malutka animacja wyświetlająca status bota
 				if($i['animacja'] == 4) $i['animacja'] = 0;
@@ -140,13 +178,14 @@ if($tsAdmin->getElement('success', $tsAdmin->connect())) {
 				else if($i['animacja'] == 2) echo "Running! — \r";
 				else if($i['animacja'] == 3) echo "Running! \ \r";
 				$i['animacja']++; $i['pingpong']++;
+
 		}
 		
 		
 	
 } else {
 
-		echo "Connection could not be established.\n";
+		echo "\e[0;31mConnection could not be established.\e[0m\n";
 }
 
 ?>
