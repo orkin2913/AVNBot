@@ -1,0 +1,2 @@
+Witaj %CLIENT_NICKNAME%! Ostatni raz byłeś u nas %CLIENT_LASTCONNECTED%.
+Połączyłeś się z serwerem %CLIENT_TOTALCONNECTIONS% razy. Twoje IP: %CLIENT_IP%, Twoje unikalne ID: %CLIENT_UNIQUE_ID%
