@@ -1,0 +1,14 @@
+---
+addon:
+    name: Example
+    author: Orkin (AVNTeam.net)
+    lang: pl
+
+example:
+    test: hello
+    test1: world
+    eampleexample:
+        - test1
+        - test2
+        - 3
+...

@@ -1,0 +1,53 @@
+{
+	"name": "AVNBot",
+	"version": "2.0.0-alpha.1",
+	"description": "Automatic Voice Network Bot for TeamSpeak 3",
+	"homepage": "http://avnteam.net/project/AVNBot",
+	"license": "GPL-3.0",
+	"author": {
+		"name": "orkin",
+		"email": "orkin@avnteam.net",
+		"url": "http://avnteam.net/"
+	},
+	"main": "AVNBot.js",
+	"files": [
+		"schemas/",
+		"addons/",
+		"config/",
+		"lang/",
+		"lib/",
+		"LICENSE",
+		"AVNBot.js"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/orkin2913/avnbot"
+	},
+	"dependencies": {
+		"mysql": "^2.11.1",
+		"node-teamspeak": "^1.0.10",
+		"js-yaml": "^3.6.1",
+		"compare-versions": "^2.0.2",
+		"semver-regex": "^1.0.0",
+		"request" : "^2.79.0",
+		"colors": "^1.1.2"
+	},
+	"engines": {
+		"node": ">= 6.9.0"
+	},
+	"os": [
+		"linux"	
+	],
+	"keywords": [
+		"teamspeak",
+		"teamspeak3",
+		"serverquery",
+		"ts3",
+		"ts",
+		"bot",
+		"api",
+		"framework",
+		"avnbot",
+		"avn"
+	]
+}

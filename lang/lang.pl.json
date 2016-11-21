@@ -1,0 +1,21 @@
+{
+	"author": "orkin <orkin@avnteam.net> https://avnteam.net/",
+	
+	"source": "Źródło",
+	"target": "Cel",
+	"0": "Pomyślnie zalogowano",
+	"1": "Pomyślnie wybrano serwer",
+	"2": "Pomyślnie załadowano",
+	"3": "Błąd",
+	"4": "Ustawiono nick",
+	"5": "Załadowano konfigurację",
+	"6": "Ładowanie modułów",
+	"7": "Brak modułów do załadowania",
+	"8": "Bot przerzucony na kanał",
+	
+	"100": "Próba podszycia się pod bota (nick)",
+	
+	"300": "Administracja została poinformowana. Zaczekaj cierpliwie na pomoc.",
+	"301": "Wygląda na to, że administracja jest teraz zajęta. Spróbuj ponownie później.",
+	"302": "Ktoś oczekuje na kanale pomocy"
+}
